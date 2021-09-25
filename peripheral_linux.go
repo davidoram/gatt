@@ -41,7 +41,7 @@ func (p *peripheral) Name() string         { return p.pd.Name }
 func (p *peripheral) Services() []*Service { return p.svcs }
 
 func finish(op byte, h uint16, b []byte) bool {
-	done := b[0] == attOpError && b[1] == op && b[2] == byte(h) && b[3] == byte(h>>8)
+	done := len(b) > 4 && b[0] == attOpError && b[1] == op && b[2] == byte(h) && b[3] == byte(h>>8)
 	e := attEcode(b[4])
 	if e != attEcodeAttrNotFound {
 		// log.Printf("unexpected protocol error: %s", e)
